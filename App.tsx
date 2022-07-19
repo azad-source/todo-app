@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Navbar } from "./src/Navbar";
 import { AddTodo } from "./src/AddTodo";
-import { TaskType, Task } from "./src/Todo";
+import { TaskType, Task } from "./src/Task";
 import { mainColor, mainTextColor, secondColor } from "./src/domain/colors";
 import { contentFontSize, titleFontSize } from "./src/domain/constants";
 

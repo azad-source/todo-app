@@ -1,6 +1,7 @@
 import * as React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { mainColor, mainTextColor } from "./domain/colors";
+import { Icon } from "react-native-elements";
+import { mainColor, mainTextColor, secondColor } from "./domain/colors";
 import { contentFontSize } from "./domain/constants";
 
 export type TaskType = {
@@ -21,24 +22,21 @@ export const Task: React.FC<Props> = ({ task, onRemove, addToComplete }) => {
       alignItems: "center",
       padding: 15,
       borderWidth: 1,
-      borderColor: mainColor,
+      borderColor: !addToComplete ? secondColor : mainColor,
       borderRadius: 5,
       marginBottom: 10,
-      overflow: 'hidden'
+      overflow: "hidden",
+      backgroundColor: !addToComplete ? secondColor : "#fff",
     },
     taskText: {
       fontSize: contentFontSize,
       textDecorationLine: !addToComplete ? "line-through" : "none",
       color: mainTextColor,
-      maxWidth: '90%'
+      maxWidth: "90%",
+      marginLeft: 12,
     },
-    circle: {
-      borderWidth: 1,
-      borderColor: mainColor,
-      borderRadius: 10,
-      width: 20,
-      height: 20,
-      marginRight: 12,
+    remove: {
+      marginLeft: "auto",
     },
   });
 
@@ -46,16 +44,28 @@ export const Task: React.FC<Props> = ({ task, onRemove, addToComplete }) => {
     <TouchableOpacity
       activeOpacity={0.5}
       onPress={() => console.log("Pressed", task.id)}
-      onLongPress={() => onRemove(task.id)}
+      // onLongPress={() => onRemove(task.id)}
     >
       <View style={styles.task}>
-        {!!addToComplete && (
-          <TouchableOpacity
-            onPress={() => addToComplete(task.id)}
-            style={styles.circle}
-          />
+        {!!addToComplete ? (
+          <TouchableOpacity onPress={() => addToComplete(task.id)}>
+            <Icon name="ellipse-outline" type="ionicon" color={mainColor} />
+          </TouchableOpacity>
+        ) : (
+          <Icon name="check" color={mainColor} />
         )}
         <Text style={styles.taskText}>{task.title}</Text>
+
+        <TouchableOpacity
+          onPress={() => onRemove(task.id)}
+          style={styles.remove}
+        >
+          {!!addToComplete ? (
+            <Icon name="trash" type="font-awesome" color={mainColor} />
+          ) : (
+            <Icon name="arrow-up-outline" type="ionicon" color={mainColor} />
+          )}
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );

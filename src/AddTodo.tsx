@@ -52,7 +52,7 @@ export const AddTodo = ({ onSubmit }) => {
         style={styles.input}
         value={value}
         onChangeText={setValue}
-        placeholder="Введите название дела"
+        placeholder="Опишите задачу"
         autoCorrect={false}
         autoCapitalize="none"
         placeholderTextColor={secondColor}

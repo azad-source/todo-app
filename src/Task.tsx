@@ -13,9 +13,15 @@ interface Props {
   task: TaskType;
   onRemove: (id: string) => void;
   addToComplete?: (id: string) => void;
+  onEdit?: (id: string) => void;
 }
 
-export const Task: React.FC<Props> = ({ task, onRemove, addToComplete }) => {
+export const Task: React.FC<Props> = ({
+  task,
+  onRemove,
+  addToComplete,
+  onEdit,
+}) => {
   const styles = StyleSheet.create({
     task: {
       flexDirection: "row",
@@ -43,7 +49,7 @@ export const Task: React.FC<Props> = ({ task, onRemove, addToComplete }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      onPress={() => console.log("Pressed", task.id)}
+      onPress={!!onEdit ? () => onEdit(task.id) : undefined}
       // onLongPress={() => onRemove(task.id)}
     >
       <View style={styles.task}>

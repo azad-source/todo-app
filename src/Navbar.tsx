@@ -1,11 +1,26 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Icon } from "react-native-elements";
 import { mainColor } from "./domain/colors";
+import { headerFontSize } from "./domain/constants";
 
-export const Navbar = (props) => {
+interface Props {
+  title: string;
+  showAppInfo: () => void;
+}
+
+export const Navbar: React.FC<Props> = ({ title, showAppInfo }) => {
   return (
     <View style={styles.navbar}>
-      <Text style={styles.text}>{props.title}</Text>
+      <Text style={styles.text}>{title}</Text>
+      <TouchableOpacity onPress={showAppInfo} style={styles.infoButton}>
+        <Icon
+          name="information-circle-outline"
+          type="ionicon"
+          color="#fff"
+          size={30}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -20,6 +35,12 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
-    fontSize: 20,
+    fontSize: headerFontSize,
+  },
+  infoButton: {
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    fontSize: headerFontSize,
   },
 });

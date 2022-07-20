@@ -5,21 +5,28 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Keyboard,
 } from "react-native";
 import { mainColor, secondColor } from "./domain/colors";
 import { contentFontSize } from "./domain/constants";
+import { TaskType } from "./Task";
 
-export const AddTodo = ({ onSubmit }) => {
-  const [value, setValue] = React.useState("");
+interface Props {
+  onCreate: (task: TaskType) => void;
+}
+
+export const AddTodo: React.FC<Props> = ({ onCreate }) => {
+  const [taskTitle, setTaskTitle] = React.useState("");
 
   const pressHandler = () => {
-    if (value.trim()) {
-      onSubmit(value);
-      setValue("");
+    if (taskTitle.trim()) {
+      onCreate({ id: Date.now().toString(), title: taskTitle });
+      setTaskTitle("");
+      Keyboard.dismiss();
     }
   };
 
-  const canAddTask = !!value.trim();
+  const canAddTask = !!taskTitle.trim();
 
   const styles = StyleSheet.create({
     block: {
@@ -50,8 +57,8 @@ export const AddTodo = ({ onSubmit }) => {
     <View style={styles.block}>
       <TextInput
         style={styles.input}
-        value={value}
-        onChangeText={setValue}
+        value={taskTitle}
+        onChangeText={setTaskTitle}
         placeholder="Опишите задачу"
         autoCorrect={false}
         autoCapitalize="none"
